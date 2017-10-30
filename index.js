@@ -6,10 +6,23 @@ const voteGoogleUrl = 'https://www.theverge.com/polls/vote_json?poll_option=2106
 
 const voteGoogle = (callback) => {
   request(voteGoogleUrl, (error, request, body) => {
-    callback(error, JSON.parse(body))
+    try {
+      callback(error, JSON.parse(body))
+    } catch(error) {
+      callback(error)
+    }
   })
 }
 
-async.times(5, (n, next) => async.forever(voteGoogle, next), (error) => {
-  throw error
-})
+const voteGoogleForever = (callback) => {
+  async.times(4, (n, next) => async.forever(voteGoogle, next), callback)
+}
+
+const voteGoogleForeverForever = () => {
+  voteGoogleForever( (error) =>{
+    console.log('Had to slow down. Trying again in 1 minute')
+    setTimeout(voteGoogleForeverForever, 60000)
+  })
+}
+
+voteGoogleForeverForever()
