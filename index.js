@@ -15,13 +15,13 @@ const voteGoogle = (callback) => {
 }
 
 const voteGoogleForever = (callback) => {
-  async.times(4, (n, next) => async.forever(voteGoogle, next), callback)
+  async.times(3, (n, next) => async.forever(voteGoogle, next), callback)
 }
 
 const voteGoogleForeverForever = () => {
   voteGoogleForever( (error) =>{
-    console.log('Had to slow down. Trying again in 1 minute')
-    setTimeout(voteGoogleForeverForever, 60000)
+    console.log('Had to slow down. Trying again in 30 seconds')
+    setTimeout(voteGoogleForeverForever, 30000)
   })
 }
 
