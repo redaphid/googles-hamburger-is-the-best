@@ -15,6 +15,7 @@ const voteGoogle = (callback) => {
 }
 
 const voteGoogleForever = (callback) => {
+  console.log('Voting Google forever')
   async.times(3, (n, next) => async.forever(voteGoogle, next), callback)
 }
 
